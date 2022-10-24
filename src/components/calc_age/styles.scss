@@ -1,0 +1,236 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    padding: 20px;
+  }
+  
+  @media (min-width: 768px) {
+    body {
+      max-width: 80vw;
+    }
+  }
+  
+  form {
+    label {
+      display: flex;
+      margin-bottom: 0.5rem;
+  
+      @media screen and (max-width: 375px) {
+        flex-flow: column;
+      }
+  
+      .label {
+        width: 100px;
+        display: inline-block;
+        margin-bottom: 10px;
+        line-height: 2;
+      }
+    }
+  
+    &.unitForm {
+      margin: 2rem 0 0 0;
+  
+      @media screen and (min-width: 769px) {
+        margin: 0 0 0 2rem;
+      }
+    }
+  }
+  
+  .dateTimePicker {
+    display: flex;
+  
+    input[type="date"] {
+      width: 55%;
+    }
+  
+    input[type="time"] {
+      width: 45%;
+    }
+  }
+  
+  .persons {
+    margin-top: 50px;
+  }
+  
+  .person {
+    &__age {
+      font-size: 20px;
+    }
+  }
+  
+  input[type="text"],
+  .dateTimePicker,
+  select {
+    width: calc(100% - 100px);
+  
+    @media screen and (max-width: 375px) {
+      width: 100%;
+    }
+  }
+  
+  button {
+    &.btn--remove {
+      margin-left: 1rem;
+      float: right;
+    }
+  
+    &.btn--naked {
+      background: none;
+    }
+  
+    .icon {
+      width: 1em;
+      height: auto;
+      vertical-align: text-top;
+      margin-right: 0.3em;
+    }
+  }
+  
+  .formFooter {
+    display: flex;
+  
+    button {
+      width: 50%;
+      margin-top: 3px;
+      min-height: 2.4rem;
+    }
+  
+    button[type="reset"] {
+      margin-left: 0.5rem;
+    }
+  }
+  
+  .forms {
+    display: flex;
+  
+    @media screen and (max-width: 768px) {
+      flex-flow: column;
+    }
+  }
+  
+  [title][role="img"] {
+    cursor: help;
+    /* text-decoration: dotted underline; */
+  }
+  
+  @media (pointer: coarse), (hover: none) {
+    [title] {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+    }
+  
+    [title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      top: 90%;
+      color: #000;
+      background-color: #fff;
+      border: 1px solid;
+      width: fit-content;
+      padding: 3px;
+    }
+  }
+  
+  details {
+    font-size: initial;
+    display: inline-block;
+    vertical-align: text-top;
+    margin-left: 1rem;
+    vertical-align: top;
+  
+    li.past {
+      color: darkred;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+  
+    summary {
+      cursor: pointer;
+      display: inline-block;
+      list-style: none;
+      padding: 0.2em 1em 0.5em;
+  
+      &::-webkit-details-marker {
+        display: none;
+      }
+  
+      &:hover {
+        .party {
+          transform: rotate(-10deg) scale(1.5);
+          transition: transform 300ms ease-in-out;
+        }
+      }
+    }
+  
+    span,
+    svg {
+      vertical-align: text-bottom;
+    }
+  
+    .icon {
+      transition: transform 300ms ease;
+      margin-left: 0.5em;
+    }
+  
+    .icon--show {
+      max-width: 1em;
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  
+    .icon--hide {
+      margin: 0;
+      max-width: 0;
+      opacity: 0;
+      transform: scaleX(0);
+    }
+  
+    &[open] {
+      .icon--show {
+        margin: 0;
+        max-width: 0;
+        opacity: 0;
+        transform: scaleX(0);
+      }
+  
+      .icon--hide {
+        max-width: 1em;
+        opacity: 1;
+        margin-left: 0.5em;
+        transform: scaleX(1);
+      }
+    }
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: rotate(10deg) scale(1);
+    }
+  
+    10% {
+      transform: rotate(-10deg) scale(1.5);
+    }
+  
+    20% {
+      transform: rotate(10deg) scale(1);
+    }
+  }
+  
+  .party {
+    display: inline-block;
+    animation-name: shake;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-delay: 2s;
+  }
+  
+  footer {
+    margin-top: 5rem;
+    font-size: 10pt;
+  }
+  

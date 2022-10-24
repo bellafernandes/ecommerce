@@ -1,0 +1,166 @@
+import React, { Component, Fragment, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+
+// export default function Calc() {
+//   return (
+//     <>
+//       <AgeCalculator />
+//     </>
+//   );
+// }
+
+//make years and days array
+function generateArray(start, end) {
+  let arr = [];
+  for (start; start <= end; start++) {
+    arr.push(start);
+  }
+  return arr;
+}
+
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+//1-31
+const days = generateArray(1, 31);
+//1900-today
+const years = generateArray(1900, new Date().getFullYear());
+
+//calculate age
+function calculateAge(birthday) {
+  //milliseconds in a year 1000*24*60*60*365.24 = 31556736000;
+  let today = new Date(),
+    //birthay has 'Dec 25 1998'
+    dob = new Date(birthday),
+    //difference in milliseconds
+    diff = today.getTime() - dob.getTime(),
+    //convert milliseconds into years
+    years = Math.floor(diff / 31556736000),
+    //1 day has 86400000 milliseconds
+    days_diff = Math.floor((diff % 31556736000) / 86400000),
+    //1 month has 30.4167 days
+    months = Math.floor(days_diff / 30.4167),
+    days = Math.floor(days_diff % 30.4167);
+
+  console.log(`${years} years ${months} months ${days} days`);
+  return `${years} years ${months} months ${days} days`;
+}
+
+export default class AgeCalculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
+    this.handleMonthChange = this.handleMonthChange.bind(this);
+    this.handleYearChange = this.handleYearChange.bind(this);
+  }
+
+  handleDayChange(e) {
+    this.setState({
+      day: e.target.value,
+    });
+  }
+
+  handleMonthChange(e) {
+    this.setState({
+      month: e.target.value,
+    });
+  }
+
+  handleYearChange(e) {
+    this.setState({
+      year: e.target.value,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const day = this.state.day,
+      month = this.state.month,
+      year = this.state.year;
+
+    const age = calculateAge(`${month} ${day} ${year}`);
+
+    this.setState({
+      age: age,
+    });
+  }
+
+  
+
+  render() {
+    return (
+      <>
+        
+          <div className="relative w-full h-full">
+          <div className="mt-20 ml-20">
+            <h1>Please, confirm your birthdate</h1>
+            <form onSubmit={this.handleSubmit}>
+              <div className="container flex gap-4">
+                <Input
+                  arr={days}
+                  handleChange={this.handleDayChange}
+                  val={this.state.day}
+                />
+                <Input
+                  arr={months}
+                  handleChange={this.handleMonthChange}
+                  val={this.state.month}
+                />
+                <Input
+                  arr={years}
+                  handleChange={this.handleYearChange}
+                  val={this.state.year}
+                />
+              </div>
+              <button type="submit">Send</button>
+            </form>
+            <div>
+              {/* <h2>Your age is</h2>
+          <span>{this.state.age}</span> */}
+              {/* {(this.state.age < '18') ? <h2>not allowed</h2> : <h2>allowed</h2>} */}
+              {this.state.age < "18" ? "not allowed" : "allowed"}
+            </div>
+          </div>
+        </div>
+   
+        
+      </>
+    );
+  }
+}
+
+function Input(props) {
+  let options = props.arr.map((item) => (
+    <option value={item} key={item}>
+      {item}
+    </option>
+  ));
+
+  return (
+    <select
+      onChange={props.handleChange}
+      value={props.val}
+      className="border-zinc-300 border-2 bg-transparent"
+    >
+      {options}
+    </select>
+  );
+}
+
+// ReactDOM.render(<AgeCalculator />,document.getElementById('root'));
